@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"classpath://org/hibernate/hibernate-mapping-3.0.dtd">
+<!-- Generated 11/06/2015 18:14:23 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping default-cascade="save-update, delete">
+ <class name="com.igt.fsp.generated.db.FspOutDivisions" table="FSP_OUT_DIVISIONS">
+  <composite-id class="com.igt.fsp.generated.db.FspOutDivisionsId" mapped="false"
+   name="id" unsaved-value="undefined">
+   <key-property name="divnr" type="int">
+    <column name="DIVNR"/>
+   </key-property>
+   <key-many-to-one class="com.igt.fsp.generated.db.FspOutData" name="fspOutData">
+    <column length="1" name="GAMEID"/>
+    <column name="DRAWNR"/>
+   </key-many-to-one>
+  </composite-id>
+  <property generated="never" lazy="false" name="winnersq" type="long">
+   <column name="WINNERSQ" not-null="true">
+    <comment>Quantity of winners division "n"</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="winnersamount" type="big_decimal">
+   <column name="WINNERSAMOUNT" not-null="true" precision="20">
+    <comment>Amount to pay to winners of division "n"</comment>
+   </column>
+  </property>
+ </class>
+</hibernate-mapping>

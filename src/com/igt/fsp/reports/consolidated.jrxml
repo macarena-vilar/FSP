@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-09-23T01:04:43 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consolidated" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9f512668-0dd7-40ec-9481-4585f77011c3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="91"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#C0C0C0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#FFEFEF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="c7e6ad75-9617-4b92-9954-9a6916b9c2d1"/>
+	<parameter name="gameId" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA['E']]></defaultValueExpression>
+	</parameter>
+	<parameter name="drawNr" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[85]]></defaultValueExpression>
+	</parameter>
+	<parameter name="gameName" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA['ELEGIDOS']]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select -1 as orderNr,
+       t.vendorId,
+       d.divNr,
+       h.drawDate,
+       'Vendor ID:' || t.vendorId as vendorTxt,
+       t.salesTotalAmount,
+       t.canceledTotalAmount,
+       d.winnersQ,
+       (case when d.winnersQ = 0 then 0 else d.winnersAmount end ) as winnersAmount
+  from fsp_inp_header h,
+       fsp_inp_totals t,
+       fsp_inp_divisions d
+ where h.gameid      = t.gameid
+   and h.drawnr    = t.drawnr
+   and t.gameid    = d.gameid
+   and t.drawnr    = d.drawnr
+   and t.vendorid  = d.vendorid
+   and h.gameId    = $P{gameId}
+   and h.drawNr    = $P{drawNr}
+union all
+select 1 as orderNr,
+       'X',
+       divnr,
+       max(h.drawDate),
+       'TOTALES',
+       sum(salestotalamount) as totsales,
+       sum(canceledtotalamount) as totcanceled,
+       sum(winnersq) as totwinnersQ,
+       sum(case when winnersQ = 0 then 0 else winnersAmount end) as totwinnersAmount
+  from fsp_inp_header h,
+       fsp_inp_totals t,
+       fsp_inp_divisions d
+ where h.gameId    = t.gameid
+   and h.drawnr    = t.drawnr
+   and t.gameid    = d.gameid
+   and t.drawnr    = d.drawnr
+   and t.vendorid  = d.vendorid
+   and h.gameId    = $P{gameId}
+   and h.drawNr    = $P{drawNr}
+ group by d.divnr
+ order by 1,2,3]]>
+	</queryString>
+	<field name="ordernr" class="java.lang.Integer"/>
+	<field name="vendorid" class="java.lang.String"/>
+	<field name="divnr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Div number (1 ... n)]]></fieldDescription>
+	</field>
+	<field name="drawdate" class="java.sql.Date">
+		<fieldDescription><![CDATA[Date of the game]]></fieldDescription>
+	</field>
+	<field name="vendortxt" class="java.lang.String"/>
+	<field name="salestotalamount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Total amount of non canceled sold tickets]]></fieldDescription>
+	</field>
+	<field name="canceledtotalamount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Total amountof canceled tickets]]></fieldDescription>
+	</field>
+	<field name="winnersq" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Quantity of winners division "n"]]></fieldDescription>
+	</field>
+	<field name="winnersamount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Amount to pay to winners of division "n"]]></fieldDescription>
+	</field>
+	<variable name="winnersq_1" class="java.math.BigDecimal" resetType="Group" resetGroup="vendortxt" calculation="Sum">
+		<variableExpression><![CDATA[$F{winnersq}]]></variableExpression>
+	</variable>
+	<variable name="winnersamount_1" class="java.math.BigDecimal" resetType="Group" resetGroup="vendortxt" calculation="Sum">
+		<variableExpression><![CDATA[$F{winnersamount}]]></variableExpression>
+	</variable>
+	<group name="vendortxt">
+		<groupExpression><![CDATA[$F{vendortxt}]]></groupExpression>
+		<groupHeader>
+			<band height="89">
+				<textField>
+					<reportElement x="0" y="21" width="100" height="20" uuid="d82240a1-b258-4ad1-88f8-2c7bf7f9e600"/>
+					<textFieldExpression><![CDATA[$F{vendortxt}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="58" width="67" height="20" uuid="22ae3326-249b-492d-87cf-34770e799402"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[División]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="246" y="58" width="100" height="20" uuid="9cc57efd-ef95-40cb-b328-a802081b18d2"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Ganadores]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="475" y="58" width="100" height="20" uuid="a8394cd1-cb55-4997-86a6-7aac45f670cd"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Premio total]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="11" width="802" height="1" uuid="22785bf5-6d8b-4705-b6ee-3506b8562df6"/>
+				</line>
+				<line>
+					<reportElement x="0" y="77" width="802" height="1" uuid="23c5edbf-d87a-4ea0-8628-f526170250f2"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="127">
+				<break>
+					<reportElement x="0" y="126" width="100" height="1" uuid="133c087d-43bd-432a-8659-578b50bf222c"/>
+				</break>
+				<textField pattern="###0">
+					<reportElement x="246" y="15" width="100" height="20" uuid="7b8f160b-8f1c-4717-8460-13d4e311baf9"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{winnersq_1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="475" y="15" width="100" height="20" uuid="bfc5bfef-6416-4ecf-9844-2dc7e017ad6b"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{winnersamount_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="459" y="15" width="22" height="20" uuid="7b45976e-a2f1-4269-9a10-a704231db185"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[GS]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="14" width="802" height="1" uuid="69696054-143e-4989-8af1-469efd24e476"/>
+				</line>
+				<staticText>
+					<reportElement x="20" y="41" width="100" height="20" uuid="6323cdc4-c716-4dd7-aa21-c85c6f1e48da"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ventas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="20" y="61" width="100" height="20" uuid="0d197104-1fa0-4aea-8026-63754b8bec0d"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Anulaciones]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="20" y="81" width="100" height="20" uuid="4777279d-c7a6-4104-8802-72ebfe24eab6"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ventas netas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="120" y="41" width="22" height="20" uuid="aeb669ab-3668-41f9-a384-3e25ca627ef0"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[GS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="120" y="61" width="22" height="20" uuid="f6d7e1d6-0f35-436e-8a81-989f9b501ce6"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[GS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="120" y="81" width="22" height="20" uuid="d39532e2-68e9-4cb8-a190-31e816915802"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[GS]]></text>
+				</staticText>
+				<textField pattern="#,##0.00">
+					<reportElement x="146" y="41" width="100" height="20" uuid="d7b8a58e-893d-4f75-bf3a-004da513326d"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{salestotalamount}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="146" y="61" width="100" height="20" uuid="eb9ff976-f347-4851-8b46-6c79ac3a38aa"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{canceledtotalamount}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="146" y="81" width="100" height="20" uuid="b3abb8d0-eaf5-4735-a4e4-84947b3b344a"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{salestotalamount}-$F{canceledtotalamount}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="20" width="100" height="20" uuid="42e4a003-7d41-4c7c-b0f3-54a9b9a8ef1c"/>
+				<text><![CDATA[CDC:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="100" y="20" width="100" height="20" uuid="1db358e2-a0e9-464e-9c49-afa940a9cd21"/>
+				<textFieldExpression><![CDATA[$F{drawdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="234" y="20" width="334" height="20" uuid="ef0001d5-d104-47fa-a8be-105d9b8b670e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RESUMEN DE GANADORES PARA EL SORTEO " + $P{drawNr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="306" y="0" width="191" height="20" uuid="51b85a0b-b9ff-4fa4-af84-5da9ed16d589"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["GANEMAX-" + $P{gameName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="156" height="20" uuid="d7e63b17-2599-4009-89b5-144b5e25f563"/>
+				<text><![CDATA[consolidated summary 1.00]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="0" width="40" height="20" uuid="b0154fbf-d785-4bee-a213-e8d7533b69b7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="702" y="20" width="100" height="20" uuid="27465ef5-cbe1-4dc0-ac89-0083a9d8dd0b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="623" y="0" width="139" height="20" uuid="cb898686-bf84-4fc2-820d-c3c3052a4e90"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement x="0" y="0" width="67" height="20" uuid="f312250a-4e92-474a-b627-a85fe75b75e1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{divnr}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="246" y="0" width="100" height="20" uuid="ecd554ae-70dc-4a1b-a27c-f994f1e630d7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{winnersq}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="475" y="0" width="100" height="20" uuid="2a7a2083-55f3-49bf-8ee9-913903a6b0f4"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{winnersamount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="459" y="0" width="16" height="20" uuid="f61b8b1f-c254-4a71-bbae-ce7349c3ca9e"/>
+				<text><![CDATA[GS]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

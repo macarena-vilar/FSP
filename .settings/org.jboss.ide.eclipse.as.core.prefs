@@ -1,0 +1,2 @@
+eclipse.preferences.version=1
+org.jboss.ide.eclipse.as.core.singledeployable.deployableList=lib/jta.jar\nlib/log4j-1.2.15.jar\nlib/antlr-2.7.6.jar\nlib/slf4j-api-1.5.8.jar\nlib/slf4j-log4j12-1.5.8.jar\nlib/commons-logging-1.0.4.jar\nlib/hibernate3.jar\nlib/dom4j-1.6.1.jar\nlib/commons-collections-3.1.jar\n

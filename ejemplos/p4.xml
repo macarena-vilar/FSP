@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="fspInput.xsd">
+  <gameId>P</gameId>
+  <drawNR>4</drawNR>
+  <drawDate>2015-06-03</drawDate>
+  <vendorId>G</vendorId>
+  <salesTotalQ>6495</salesTotalQ>
+  <salesTotalAmount>12989167</salesTotalAmount>
+  <canceledTotalQ>0</canceledTotalQ>
+  <canceledTotalAmount>0</canceledTotalAmount>
+  <division>
+                <divNR>1</divNR>
+                <winnersQ>1</winnersQ>
+                <winnersAmount>0.000</winnersAmount>
+  </division>
+  <division>
+                <divNR>2</divNR>
+                <winnersQ>2</winnersQ>
+                <winnersAmount>200000.000</winnersAmount>
+  </division>
+  <division>
+                <divNR>3</divNR>
+                <winnersQ>38</winnersQ>
+                <winnersAmount>380000.000</winnersAmount>
+  </division>
+  <division>
+                <divNR>4</divNR>
+                <winnersQ>0</winnersQ>
+                <winnersAmount>0</winnersAmount>
+  </division>
+</game>

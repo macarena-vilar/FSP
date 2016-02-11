@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+ <session-factory name="PGYSessionFactory">
+  <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+  <property name="hibernate.connection.url">jdbc:postgresq://localhost:5432/fspdb</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+  <property name="hibernate.show_sql">false</property>
+  <property name="hibernate.format_sql">false</property>
+  <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+  <mapping class="com.igt.fsp.generated.db.FspInpHeader" resource="com/igt/fsp/generated/db/FspInpHeader.hbm.xml"/>
+  <mapping class="com.igt.fsp.generated.db.FspInpTotals" resource="com/igt/fsp/generated/db/FspInpTotals.hbm.xml"/>
+  <mapping class="com.igt.fsp.generated.db.FspInpDivisions" resource="com/igt/fsp/generated/db/FspInpDivisions.hbm.xml"/>
+  <mapping class="com.igt.fsp.generated.db.FspOutData" resource="com/igt/fsp/generated/db/FspOutData.hbm.xml"/>
+  <mapping class="com.igt.fsp.generated.db.FspOutDivisions" resource="com/igt/fsp/generated/db/FspOutDivisions.hbm.xml"/>
+ </session-factory>
+</hibernate-configuration>

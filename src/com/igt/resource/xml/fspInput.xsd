@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+	<element name="game">
+		<annotation>
+			<documentation>GANEMAX importation file
+				Games ELEGI2 and PREMIO
+				- Decimal point is point (".")
+				- Date format is ANSI (yyyy-mm-dd)
+				- Non ASCII chars int UTF-8
+			</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element name="gameId" minOccurs="1" maxOccurs="1">
+					<annotation>
+						<documentation>
+							One character game ID E : ELEGI2 P : PREMIO
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="E"></enumeration>
+							<enumeration value="P"></enumeration>
+						</restriction>
+					</simpleType>
+				</element>
+				<element name="drawNR" type="int" minOccurs="1" maxOccurs="1">
+					<annotation>
+						<documentation>Game number (sequential not negative)</documentation>
+					</annotation></element>
+				<element name="drawDate" type="date" minOccurs="1" maxOccurs="1">
+					<annotation>
+						<documentation>Game date</documentation>
+					</annotation></element>
+				<element name="vendorId" type="string" minOccurs="1" maxOccurs="1">
+					<annotation>
+						<documentation>One character vendor ID</documentation>
+					</annotation></element>
+				<element name="salesTotalQ" type="int" minOccurs="1" maxOccurs="1">
+					<annotation>
+						<documentation>Total quantity of non canceled sold tickets</documentation>
+					</annotation></element>
+				<element name="salesTotalAmount" type="decimal" minOccurs="1" maxOccurs="1">
+					<annotation>
+						<documentation>Total amount of non canceled sold tickets</documentation>
+					</annotation></element>
+				<element name="canceledTotalQ" type="int" minOccurs="1" maxOccurs="1">
+					<annotation>
+						<documentation>Total quantity of canceled tickets</documentation>
+					</annotation></element>
+				<element name="canceledTotalAmount" type="decimal" minOccurs="1" maxOccurs="1">
+					<annotation>
+						<documentation>Total amount of canceled tickets</documentation>
+					</annotation></element>
+				<element name="division" maxOccurs="unbounded" minOccurs="1">
+                    <annotation>
+                    	<documentation>Prizes</documentation>
+                    </annotation>
+                    <complexType>
+						<sequence>
+							<element name="divNR" minOccurs="1"
+								maxOccurs="1">
+								<annotation>
+									<documentation>
+										Division number (sequential
+										positive)
+									</documentation>
+								</annotation>
+								<simpleType>
+									<restriction base="int">
+										<minInclusive value="1"></minInclusive>
+									</restriction>
+								</simpleType>
+							</element>
+							<element name="winnersQ" type="int" minOccurs="1" maxOccurs="1">
+								<annotation>
+									<documentation>Quantity of winners of division</documentation>
+								</annotation></element>
+							<element name="winnersAmount" type="decimal" minOccurs="1" maxOccurs="1">
+								<annotation>
+									<documentation>Amount of prizes payed to division</documentation>
+								</annotation></element>
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

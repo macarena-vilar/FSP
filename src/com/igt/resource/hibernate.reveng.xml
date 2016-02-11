@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table-filter match-schema="DB2ADMIN"
+		match-name="FSP_INP_DIVISIONS" />
+	<table-filter match-schema="DB2ADMIN" match-name="FSP_INP_HEADER" />
+	<table-filter match-schema="DB2ADMIN" match-name="FSP_INP_TOTALS" />
+	<table-filter match-schema="DB2ADMIN" match-name="FSP_OUT_DATA" />
+	<table-filter match-schema="DB2ADMIN"
+		match-name="FSP_OUT_DIVISIONS" />
+	<table schema="DB2ADMIN" name="FSP_INP_DIVISIONS"></table>
+	<table schema="DB2ADMIN" name="FSP_OUT_DIVISIONS"></table>
+	<table schema="DB2ADMIN" name="FSP_INP_HEADER"></table>
+	<table schema="DB2ADMIN" name="FSP_INP_TOTALS"></table>
+	<table schema="DB2ADMIN" name="FSP_OUT_DATA"></table>
+</hibernate-reverse-engineering>
