@@ -80,6 +80,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "salesTotalAmount",
     "canceledTotalQ",
     "canceledTotalAmount",
+    "jackPot",
     "division"
 })
 @XmlRootElement(name = "game")
@@ -98,6 +99,8 @@ public class Game {
     @XmlElement(required = true)
     protected BigDecimal canceledTotalAmount;
     @XmlElement(required = true)
+    protected BigDecimal jackPot;
+    @XmlElement(required = false)
     protected List<Game.Division> division;
 
     /**
@@ -242,6 +245,30 @@ public class Game {
      */
     public void setCanceledTotalAmount(BigDecimal value) {
         this.canceledTotalAmount = value;
+    }
+
+    /**
+     * Gets the value of the jackPot property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getJackPot() {
+        return jackPot;
+    }
+
+    /**
+     * Sets the value of the canceledTotalAmount property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setJackPot(BigDecimal value) {
+        this.jackPot = value;
     }
 
     /**

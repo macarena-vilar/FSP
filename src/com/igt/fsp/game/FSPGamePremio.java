@@ -207,13 +207,31 @@ public class FSPGamePremio extends FSPGame {
 	protected com.igt.fsp.generated.xml.out.Game arrangeValues(com.igt.fsp.generated.xml.out.Game outGame) {
 		super.arrangeValues(outGame);
 		
+		// This game's jackpot is stored in last game's 1st division
+		BigDecimal currJackPot = new BigDecimal(MIN_JACKPOT);
+		String hqlStr = 
+				  " from FspOutDivisions\n" 
+		        + "where gameId = :gameId\n" 
+				+ "  and drawNr = :drawNr\n"
+		        + "  and divNr  = 1\n"; 
+		Query q = mainSession.createQuery(hqlStr);
+		q.setMaxResults(1);
+		q.setParameter("gameId", inpGame.getGameId());
+		q.setParameter("drawNr", inpGame.getDrawNR()-1);
+		List<FspOutDivisions> outList = q.list();
+		if ( q.list().size() >= 1) {
+			FspOutDivisions d = (FspOutDivisions)q.list().get(0);
+			currJackPot = d.getWinnersamount();			
+		}
+			
 		// The first division has the total prize
 		// and must be unit prize.
 				
 		for ( com.igt.fsp.generated.xml.out.Game.Division outDiv : outGame.getDivision() ){
 			if ( outDiv.getDivNR() == 1 )
+				outGame.setJackPot(outDiv.getWinnersAmount());
 				if ( outDiv.getWinnersQ() > 0 ){
-					double adjVal = outDiv.getWinnersAmount().doubleValue() /
+					double adjVal = currJackPot.doubleValue() /
 							outDiv.getWinnersQ();
 					outDiv.setWinnersAmount(BigDecimal.valueOf(adjVal));
 				}
@@ -222,7 +240,7 @@ public class FSPGamePremio extends FSPGame {
 		return outGame;
 
 	}
-
+	
 	@Override
 	public String getCode() {
 		return "P";

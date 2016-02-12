@@ -2,6 +2,7 @@ package com.igt.fsp.game;
 
 import java.io.FileOutputStream;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -229,6 +230,7 @@ public abstract class FSPGame {
 			outGame.getDivision().add(outDiv);
 		}
 	
+		// Only if needed
 		outGame = arrangeValues(outGame);
 		
 		JAXBContext jaxbContext = JAXBContext.newInstance(com.igt.fsp.generated.xml.out.Game.class);
