@@ -184,7 +184,7 @@ public class FSPGamePremio extends FSPGame {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String newJackPotStr;
 		double ret = currJackPot;
-		System.out.println("Enter current jackpot ["
+		System.out.println("Enter the jackpot for the next draw ["
 				+ String.format("%f", currJackPot) + "]");
 		try {
 			newJackPotStr = br.readLine();
@@ -196,7 +196,7 @@ public class FSPGamePremio extends FSPGame {
 			e.printStackTrace();
 			ret = getNewJackPot(currJackPot);
 		}
-		System.out.println("Using current jackpot = " + String.format("%f", ret));
+		System.out.println("Next jackpot = " + String.format("%f", ret));
 		return ret;
 	}
 
